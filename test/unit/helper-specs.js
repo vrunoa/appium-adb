@@ -21,6 +21,10 @@ describe('helpers', () => {
       getActivityRelativeName('pkg', '.activity.name')
         .should.equal('.activity.name');
     });
+    it('should handle case where application id is different from package name', () => {
+      getActivityRelativeName('com.ga.aaa.android.bbb.activities.local', 'com.ga.aaa.android.bbb.activity.FirstLaunchActivity')
+        .should.equal('com.ga.aaa.android.bbb.activity.FirstLaunchActivity');
+    });
   });
 
   describe('getDirectories', withMocks({fs}, (mocks) => {
