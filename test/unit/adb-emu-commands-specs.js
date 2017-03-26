@@ -86,25 +86,25 @@ describe('adb emulator commands', () => {
         mocks.adb.verify();
       });
       it("should call adb geo fix", async () => {
-        let geo = {latitude: 49.28308, longitude: -123.11086};
+        let geo = {latitude: 49.2830823, longitude: -123.1108689};
         mocks.adb.expects("getConnectedEmulators")
           .atLeast(1).withExactArgs()
           .returns(emulators);
         mocks.adb.expects("adbExec")
           .atLeast(1)
-          .withExactArgs(["emu", "geo", "fix", geo.latitude, geo.longitude])
+          .withExactArgs(["emu", "geo", "fix", 49.28309, -123.11086])
           .returns("");
         await adb.mockLocation(geo);
         mocks.adb.verify();
       });
       it("should call adb geo fix with altitude", async () => {
-        let geo = {latitude: 49.28308, longitude: -123.11086, altitude: 4392};
+        let geo = {latitude: 49.2830823, longitude: -123.1108689, altitude: 4392};
         mocks.adb.expects("getConnectedEmulators")
           .atLeast(1).withExactArgs()
           .returns(emulators);
         mocks.adb.expects("adbExec")
           .atLeast(1)
-          .withExactArgs(["emu", "geo", "fix", geo.latitude, geo.longitude, geo.altitude])
+          .withExactArgs(["emu", "geo", "fix", 49.28309, -123.11086, geo.altitude])
           .returns("");
         await adb.mockLocation(geo);
         mocks.adb.verify();
