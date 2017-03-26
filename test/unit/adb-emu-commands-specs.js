@@ -81,6 +81,22 @@ describe('adb emulator commands', () => {
         await adb.fingerprint(1111).should.eventually.be.rejected;
         mocks.adb.verify();
       });
+      it("should throw an error on missing geo location param", async () => {
+        await adb.mockLocation().should.eventually.be.rejected;
+        mocks.adb.verify();
+      });
+      it("should call adb geo fix", async () => {
+        let geo = {latitude: 49.2830825, longitude: -123.1108619};
+        mocks.adb.expects("getConnectedEmulators")
+          .atLeast(1).withExactArgs()
+          .returns(emulators);
+        mocks.adb.expects("adbExec")
+          .atLeast(1)
+          .withExactArgs(["emu", "geo", "fix", geo.latitude, geo.longitude])
+          .returns("");
+        await adb.mockLocation(geo);
+        mocks.adb.verify();
+      });
     }));
   });
 });
